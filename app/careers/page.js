@@ -1,4 +1,7 @@
 import CareersContent from '@/components/pages/CareersContent';
+import { getCollection } from '@/lib/cms';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Careers',
@@ -6,5 +9,5 @@ export const metadata = {
 };
 
 export default function CareersPage() {
-  return <CareersContent />;
+  return <CareersContent jobsData={getCollection('jobs')} />;
 }

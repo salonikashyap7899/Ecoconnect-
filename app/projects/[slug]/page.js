@@ -3,11 +3,11 @@ import { notFound } from 'next/navigation';
 import Hero3D from '@/components/Hero3D';
 import Reveal from '@/components/Reveal';
 import { CtaBand } from '@/components/ui';
-import { projects, getProject } from '@/lib/data';
+import { getCollection } from '@/lib/cms';
 
-export function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
-}
+export const dynamic = 'force-dynamic';
+
+const getProject = (slug) => getCollection('projects').find((p) => p.slug === slug) || null;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -25,6 +25,7 @@ export default async function ProjectDetailPage({ params }) {
   const project = getProject(slug);
   if (!project) notFound();
 
+  const projects = getCollection('projects');
   const idx = projects.findIndex((p) => p.slug === slug);
   const prev = projects[(idx - 1 + projects.length) % projects.length];
   const next = projects[(idx + 1) % projects.length];

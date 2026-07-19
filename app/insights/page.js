@@ -1,5 +1,8 @@
 import { Suspense } from 'react';
 import InsightsContent from '@/components/pages/InsightsContent';
+import { getCollection } from '@/lib/cms';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Insights',
@@ -9,7 +12,11 @@ export const metadata = {
 export default function InsightsPage() {
   return (
     <Suspense>
-      <InsightsContent />
+      <InsightsContent
+        articlesData={getCollection('articles')}
+        eventsData={getCollection('events')}
+        announcementsData={getCollection('announcements')}
+      />
     </Suspense>
   );
 }

@@ -8,15 +8,16 @@ import Lightbox from '@/components/Lightbox';
 import { PageHero, SectionHeading, GoldButton, GhostButton, CtaBand } from '@/components/ui';
 import {
   skillingPhilosophy, skillingEcosystem, skillingCollab, skillingGallery,
-  skillingProgrammes, skillingProgrammeCategories, skillingCareerDev,
+  skillingProgrammes, skillingCareerDev,
   skillingTestimonials, skillingStats,
 } from '@/lib/data';
 
-export default function SkillingContent() {
+export default function SkillingContent({ programmesData = skillingProgrammes }) {
+  const programmeCategories = ['All', ...new Set(programmesData.map((pr) => pr.category))];
   const [filter, setFilter] = useState('All');
   const [lightbox, setLightbox] = useState(null);
 
-  const programmes = filter === 'All' ? skillingProgrammes : skillingProgrammes.filter((p) => p.category === filter);
+  const programmes = filter === 'All' ? programmesData : programmesData.filter((p) => p.category === filter);
 
   return (
     <>
@@ -107,7 +108,7 @@ export default function SkillingContent() {
       <section id="programmes" className="bg-cream px-8 py-[120px]">
         <div className="mx-auto max-w-[1280px]">
           <Reveal><SectionHeading eyebrow="Training Programmes" title="Programmes built with hiring partners" className="mb-11" /></Reveal>
-          <div className="mb-11"><FilterPills options={skillingProgrammeCategories} value={filter} onChange={setFilter} /></div>
+          <div className="mb-11"><FilterPills options={programmeCategories} value={filter} onChange={setFilter} /></div>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
             {programmes.map((pg) => (
               <div key={pg.name} className="flex flex-col rounded-2xl bg-white p-[34px] px-[30px] shadow-card transition-all hover:-translate-y-1.5 hover:shadow-card-hover">

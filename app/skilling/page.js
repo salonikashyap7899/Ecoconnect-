@@ -1,4 +1,7 @@
 import SkillingContent from '@/components/pages/SkillingContent';
+import { getCollection } from '@/lib/cms';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Skilling',
@@ -6,5 +9,5 @@ export const metadata = {
 };
 
 export default function SkillingPage() {
-  return <SkillingContent />;
+  return <SkillingContent programmesData={getCollection('programmes')} />;
 }
