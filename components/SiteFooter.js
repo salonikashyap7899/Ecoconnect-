@@ -7,7 +7,7 @@ import { socials } from '@/lib/data';
 const columns = [
   { title: 'Company', links: [['About', '/about'], ['Leadership', '/about'], ['Careers', '/careers'], ['Contact', '/contact']] },
   { title: 'Capabilities', links: [['Skilling', '/skilling'], ['Simulation', '/simulation'], ['Services', '/services'], ['Projects', '/projects']] },
-  { title: 'Resources', links: [['Blog', '/insights'], ['News', '/insights'], ['Events', '/insights'], ['Announcements', '/insights']] },
+  { title: 'Resources', links: [['Blog', '/insights?category=Blog'], ['News', '/insights?category=News'], ['Events', '/insights#events'], ['Announcements', '/insights?category=Announcement'], ['Search', '/search']] },
 ];
 
 export default function SiteFooter() {
@@ -81,7 +81,7 @@ export default function SiteFooter() {
 
       {showTop && (
         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Back to top"
-                className="fixed bottom-7 right-7 z-90 h-12 w-12 rounded-full bg-gold text-lg text-white shadow-[0_8px_20px_rgba(154,123,79,0.35)] transition-all hover:-translate-y-0.5 hover:bg-navy">
+                className="fixed bottom-7 right-7 z-90 h-12 w-12 rounded-full bg-gold text-lg text-white shadow-[0_8px_20px_rgba(27,107,74,0.35)] transition-all hover:-translate-y-0.5 hover:bg-navy">
           ↑
         </button>
       )}

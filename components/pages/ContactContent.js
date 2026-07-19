@@ -10,10 +10,20 @@ const inputClass = 'w-full box-border rounded-[10px] border-[1.5px] border-line-
 
 export default function ContactContent() {
   const [form, setForm] = useState({ name: '', org: '', email: '', phone: '', cat: '', subject: '', msg: '' });
+  const [attachment, setAttachment] = useState(null);
+  const [fileError, setFileError] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
 
   const set = (k) => (e) => { setForm((f) => ({ ...f, [k]: e.target.value })); setError(false); };
+  const onFile = (e) => {
+    const file = e.target.files?.[0];
+    setFileError('');
+    if (!file) { setAttachment(null); return; }
+    if (!/\.(pdf|docx?|jpe?g|png)$/i.test(file.name)) { setAttachment(null); setFileError('Attachment must be a PDF, DOC, DOCX, JPG, or PNG file.'); return; }
+    if (file.size > 5 * 1024 * 1024) { setAttachment(null); setFileError('Attachment must be smaller than 5 MB.'); return; }
+    setAttachment(file);
+  };
   const submit = () => {
     const ok = form.name.trim() && /.+@.+\..+/.test(form.email) && form.cat && form.subject.trim() && form.msg.trim();
     if (ok) setSubmitted(true);
@@ -86,6 +96,14 @@ export default function ContactContent() {
                 </div>
                 <div className="mt-[18px]"><Field label="Subject *"><input value={form.subject} onChange={set('subject')} className={inputClass} /></Field></div>
                 <div className="mt-[18px]"><Field label="Message *"><textarea value={form.msg} onChange={set('msg')} rows={5} className={inputClass} /></Field></div>
+                <div className="mt-[18px]">
+                  <Field label="Attachment (optional — PDF/DOC/DOCX/JPG/PNG, max 5 MB)">
+                    <input type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onChange={onFile} className={`${inputClass} file:mr-3 file:rounded-md file:border-0 file:bg-sand file:px-3 file:py-1.5 file:font-display file:text-[13px] file:font-semibold file:text-gold`} />
+                  </Field>
+                  {fileError && <p className="m-0 mt-2 text-sm text-[#C0392B]">{fileError}</p>}
+                  {attachment && <p className="m-0 mt-2 text-sm font-semibold text-gold">✓ {attachment.name} attached</p>}
+                </div>
+                <p className="m-0 mt-4 text-[12.5px] leading-relaxed text-faint">By submitting this form you agree to our <a href="/legal#privacy" className="text-gold">Privacy Policy</a>. Your details are used only to respond to your enquiry.</p>
                 {error && <p className="m-0 mt-4 text-sm text-[#C0392B]">Please complete all required fields with a valid email.</p>}
                 <button onClick={submit} className="mt-7 w-full rounded-[10px] bg-gold px-10 py-4 font-display text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-gold-dark">Send Message</button>
               </>

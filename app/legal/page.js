@@ -1,6 +1,9 @@
 import Link from 'next/link';
 
-export const metadata = { title: 'Legal' };
+export const metadata = {
+  title: 'Legal',
+  description: 'Privacy Policy, Terms & Conditions, and Cookie Policy for the Ecoconnect Services website.',
+};
 
 const sections = [
   {

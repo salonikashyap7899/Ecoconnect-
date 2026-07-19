@@ -4,7 +4,10 @@ import TiltCard from '@/components/TiltCard';
 import { PageHero, SectionHeading, CtaBand } from '@/components/ui';
 import { capabilityCards, capabilityFlow, industries, capabilityWhy } from '@/lib/data';
 
-export const metadata = { title: 'Capabilities' };
+export const metadata = {
+  title: 'Capabilities',
+  description: 'Three capabilities, one execution partner — how Skilling, Simulation, and Services combine into an integrated delivery ecosystem.',
+};
 
 export default function CapabilitiesPage() {
   return (
@@ -64,7 +67,7 @@ export default function CapabilitiesPage() {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-5">
             {industries.map((ind, i) => (
               <Reveal key={ind.name} delay={(i % 5) * 0.06}>
-                <div className="rounded-[14px] border border-line bg-white p-7 px-[18px] text-center transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_14px_30px_rgba(154,123,79,0.12)]">
+                <div className="rounded-[14px] border border-line bg-white p-7 px-[18px] text-center transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_14px_30px_rgba(27,107,74,0.12)]">
                   <span aria-hidden="true" className="mb-3.5 inline-grid h-[50px] w-[50px] place-items-center rounded-[13px] bg-gradient-to-br from-sand to-sand-dark font-display text-[15px] font-bold text-gold">{ind.glyph}</span>
                   <p className="m-0 text-sm font-semibold leading-snug text-navy">{ind.name}</p>
                 </div>

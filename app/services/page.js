@@ -4,7 +4,10 @@ import ServicePortfolio from '@/components/ServicePortfolio';
 import { PageHero, SectionHeading, GoldButton, GhostButton, CtaBand } from '@/components/ui';
 import { servicePhilosophy, serviceFramework, serviceIndustries, serviceWhyPartner, serviceModels } from '@/lib/data';
 
-export const metadata = { title: 'Services' };
+export const metadata = {
+  title: 'Services',
+  description: 'Project planning, engineering support, execution, operations & maintenance, and audits across the clean energy ecosystem.',
+};
 
 export default function ServicesPage() {
   return (
@@ -68,7 +71,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-5">
             {serviceIndustries.map((ind, i) => (
               <Reveal key={ind.name} delay={(i % 5) * 0.06}>
-                <div className="rounded-[14px] border border-line bg-white p-7 px-[18px] text-center transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_14px_30px_rgba(154,123,79,0.12)]">
+                <div className="rounded-[14px] border border-line bg-white p-7 px-[18px] text-center transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_14px_30px_rgba(27,107,74,0.12)]">
                   <span aria-hidden="true" className="mb-3.5 inline-grid h-[50px] w-[50px] place-items-center rounded-[13px] bg-gradient-to-br from-sand to-sand-dark font-display text-[15px] font-bold text-gold">{ind.glyph}</span>
                   <p className="m-0 text-sm font-semibold leading-snug text-navy">{ind.name}</p>
                 </div>
@@ -115,7 +118,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-6">
             {serviceModels.map((m, i) => (
               <Reveal key={m.title} delay={(i % 5) * 0.06}>
-                <div className="h-full rounded-2xl border border-line p-8 px-7 transition-all hover:-translate-y-1.5 hover:border-gold hover:shadow-[0_18px_40px_rgba(154,123,79,0.1)]">
+                <div className="h-full rounded-2xl border border-line p-8 px-7 transition-all hover:-translate-y-1.5 hover:border-gold hover:shadow-[0_18px_40px_rgba(27,107,74,0.1)]">
                   <span className="mb-[22px] inline-block h-[3px] w-8 rounded-sm bg-gold" />
                   <h3 className="m-0 mb-2.5 font-display text-[17.5px] font-semibold text-navy">{m.title}</h3>
                   <p className="m-0 text-sm leading-relaxed text-muted">{m.desc}</p>

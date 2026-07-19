@@ -1,32 +1,32 @@
 @import "tailwindcss";
 
 @theme {
-  /* Ecoconnect luxury palette — navy + gold */
+  /* Ecoconnect brand palette — deep green primary + navy (WRS §6.3) */
   --color-navy: #0b2545;
   --color-navy-deep: #081b33;
   --color-ink: #051121;
-  --color-gold: #9a7b4f;
-  --color-gold-light: #b69368;
-  --color-gold-dark: #7e6238;
-  --color-champagne: #d8be91;
-  --color-champagne-soft: #c3a572;
-  --color-cream: #f7f5f0;
-  --color-sand: #f4eee2;
-  --color-sand-dark: #eae0cc;
-  --color-line: #e8e2d4;
-  --color-line-soft: #e5decd;
+  --color-gold: #1b6b4a;
+  --color-gold-light: #2f8a63;
+  --color-gold-dark: #14523a;
+  --color-champagne: #9fd6b8;
+  --color-champagne-soft: #7cc4a0;
+  --color-cream: #f4f7f5;
+  --color-sand: #e9f2ec;
+  --color-sand-dark: #d9e9df;
+  --color-line: #e1e8e3;
+  --color-line-soft: #d7e2da;
   --color-body: #2b2f33;
   --color-muted: #5b6663;
   --color-muted-deep: #4a5350;
   --color-faint: #7b8683;
   --color-faint-soft: #98a29e;
 
-  --font-display: var(--font-cormorant), "Cormorant Garamond", serif;
-  --font-sans: var(--font-jost), Jost, sans-serif;
+  --font-display: var(--font-poppins), Poppins, sans-serif;
+  --font-sans: var(--font-inter), Inter, sans-serif;
 
   --shadow-card: 0 4px 16px rgba(11, 37, 69, 0.07);
   --shadow-card-hover: 0 28px 56px rgba(11, 37, 69, 0.16);
-  --shadow-gold: 0 8px 24px rgba(154, 123, 79, 0.45);
+  --shadow-gold: 0 8px 24px rgba(27, 107, 74, 0.45);
 
   --animate-marquee: marquee 40s linear infinite;
 

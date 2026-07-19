@@ -1,6 +1,9 @@
 import Link from 'next/link';
 
-export const metadata = { title: 'Thank You' };
+export const metadata = {
+  title: 'Thank You',
+  description: 'Your submission has been received — the Ecoconnect team will respond within one business day.',
+};
 
 export default function ThankYouPage() {
   return (
