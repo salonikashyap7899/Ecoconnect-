@@ -8,6 +8,6 @@ export const metadata = {
   description: 'Industry-aligned training programmes, Centres of Excellence, and placement support building the workforce behind the energy transition.',
 };
 
-export default function SkillingPage() {
-  return <SkillingContent programmesData={getCollection('programmes')} />;
+export default async function SkillingPage() {
+  return <SkillingContent programmesData={await getCollection('programmes')} />;
 }

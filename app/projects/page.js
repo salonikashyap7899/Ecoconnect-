@@ -8,6 +8,6 @@ export const metadata = {
   description: 'Skilling, simulation, and services projects delivered across clean energy and sustainable mobility — with measurable outcomes.',
 };
 
-export default function ProjectsPage() {
-  return <ProjectsContent projectsData={getCollection('projects')} testimonialsData={getCollection('testimonials')} />;
+export default async function ProjectsPage() {
+  return <ProjectsContent projectsData={await getCollection('projects')} testimonialsData={await getCollection('testimonials')} />;
 }

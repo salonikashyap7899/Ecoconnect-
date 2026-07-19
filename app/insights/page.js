@@ -9,13 +9,13 @@ export const metadata = {
   description: 'Blog, news, events, and announcements from Ecoconnect Services — thinking that powers the clean energy transition.',
 };
 
-export default function InsightsPage() {
+export default async function InsightsPage() {
   return (
     <Suspense>
       <InsightsContent
-        articlesData={getCollection('articles')}
-        eventsData={getCollection('events')}
-        announcementsData={getCollection('announcements')}
+        articlesData={await getCollection('articles')}
+        eventsData={await getCollection('events')}
+        announcementsData={await getCollection('announcements')}
       />
     </Suspense>
   );

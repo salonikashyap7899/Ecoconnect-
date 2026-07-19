@@ -15,7 +15,7 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Please complete all required fields with a valid email.' }, { status: 400 });
   }
 
-  const entry = addSubmission('enquiries', {
+  const entry = await addSubmission('enquiries', {
     name: name.trim(), org: org?.trim() || '', email: email.trim(), phone: phone?.trim() || '',
     category, subject: subject.trim(), message: message.trim(),
   });
