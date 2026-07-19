@@ -3,7 +3,10 @@ import Reveal from '@/components/Reveal';
 import { PageHero, SectionHeading, GoldButton, GhostButton, CtaBand } from '@/components/ui';
 import { aboutVmp, aboutJourney, aboutFlow, aboutLeaders, aboutEcosystem, aboutWhy } from '@/lib/data';
 
-export const metadata = { title: 'About' };
+export const metadata = {
+  title: 'About',
+  description: 'Who Ecoconnect Services is — vision, mission, leadership, journey, business model, and the ecosystem behind the energy transition.',
+};
 
 export default function AboutPage() {
   return (
@@ -23,7 +26,7 @@ export default function AboutPage() {
             <SectionHeading eyebrow="Company Overview" title="From innovation to implementation" className="mb-[22px]" />
             <p className="m-0 mb-4 text-[16.5px] leading-[1.75] text-muted-deep">Ecoconnect Services is an execution-focused company working at the intersection of Skilling, Simulation, and Services. Our approach combines workforce development, engineering capabilities, and on-ground execution to bridge the gap between innovation and implementation.</p>
             <p className="m-0 mb-8 text-[16.5px] leading-[1.75] text-muted-deep">Our work spans electric mobility, commercial vehicles, renewable energy, battery energy storage systems, power electronics, and digital infrastructure — supporting the complete journey from concept to commercial implementation.</p>
-            <Link href="/contact" className="inline-flex items-center gap-2.5 rounded-lg bg-navy px-[30px] py-3.5 font-display text-[15px] font-semibold text-white no-underline transition-all hover:-translate-y-0.5 hover:bg-gold">↓ Download Corporate Profile</Link>
+            <a href="/downloads/ecoconnect-corporate-profile.pdf" download className="inline-flex items-center gap-2.5 rounded-lg bg-navy px-[30px] py-3.5 font-display text-[15px] font-semibold text-white no-underline transition-all hover:-translate-y-0.5 hover:bg-gold">↓ Download Corporate Profile</a>
           </Reveal>
           <Reveal delay={0.15}>
             <div className="overflow-hidden rounded-[18px] shadow-[0_24px_60px_rgba(11,37,69,0.18)]">
@@ -122,7 +125,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-5">
             {aboutEcosystem.map((e, i) => (
               <Reveal key={e.name} delay={(i % 5) * 0.05}>
-                <div className="grid h-[92px] place-items-center rounded-xl border border-line bg-white transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_12px_28px_rgba(154,123,79,0.1)]">
+                <div className="grid h-[92px] place-items-center rounded-xl border border-line bg-white transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_12px_28px_rgba(27,107,74,0.1)]">
                   <div className="text-center">
                     <p className="m-0 font-display text-[15px] font-semibold text-muted">{e.name}</p>
                     <p className="m-0 mt-1 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-faint-soft">{e.group}</p>

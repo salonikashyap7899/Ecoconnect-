@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Reveal from '@/components/Reveal';
 import FilterPills from '@/components/FilterPills';
 import { PageHero, SectionHeading, CtaBand } from '@/components/ui';
@@ -11,7 +12,13 @@ const featured = articles.find((a) => a.featured);
 const tabs = ['All', 'Blog', 'News', 'Case Study', 'Technical Article', 'Announcement'];
 
 export default function InsightsContent() {
-  const [tab, setTab] = useState('All');
+  const router = useRouter();
+  const params = useSearchParams();
+  const urlCategory = params.get('category');
+  const tab = tabs.includes(urlCategory) ? urlCategory : 'All';
+  const setTab = (next) => {
+    router.replace(next === 'All' ? '/insights' : `/insights?category=${encodeURIComponent(next)}`, { scroll: false });
+  };
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -74,7 +81,7 @@ export default function InsightsContent() {
       </section>
 
       {/* Events */}
-      <section className="bg-cream px-8 py-[100px]">
+      <section id="events" className="bg-cream px-8 py-[100px]">
         <div className="mx-auto max-w-[1280px]">
           <Reveal><SectionHeading eyebrow="Events" title="Meet us in the field" className="mb-13" /></Reveal>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">

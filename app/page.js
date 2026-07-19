@@ -19,7 +19,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative flex min-h-[calc(100vh-76px)] items-center overflow-hidden bg-navy">
         <Hero3D />
-        <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(100deg,rgba(5,17,33,0.82)_20%,rgba(5,17,33,0.42)_60%,rgba(154,123,79,0.25)_100%)]" />
+        <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(100deg,rgba(5,17,33,0.82)_20%,rgba(5,17,33,0.42)_60%,rgba(27,107,74,0.25)_100%)]" />
         <div className="relative mx-auto w-full max-w-[1280px] px-8 py-[120px]">
           <Reveal className="max-w-[760px]">
             <Eyebrow tone="champagne" rule className="mb-[22px]">Skilling · Simulation · Services</Eyebrow>
@@ -103,7 +103,7 @@ export default function HomePage() {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-5">
             {industries.map((ind, i) => (
               <Reveal key={ind.name} delay={(i % 5) * 0.06}>
-                <Link href="/projects" className="block rounded-[14px] border border-line bg-white p-7 px-[18px] text-center text-inherit no-underline transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_14px_30px_rgba(154,123,79,0.12)]">
+                <Link href="/projects" className="block rounded-[14px] border border-line bg-white p-7 px-[18px] text-center text-inherit no-underline transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_14px_30px_rgba(27,107,74,0.12)]">
                   <span aria-hidden="true" className="mb-3.5 inline-grid h-[50px] w-[50px] place-items-center rounded-[13px] bg-gradient-to-br from-sand to-sand-dark font-display text-[15px] font-bold text-gold">{ind.glyph}</span>
                   <p className="m-0 text-sm font-semibold leading-snug text-navy">{ind.name}</p>
                 </Link>

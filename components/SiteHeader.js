@@ -57,13 +57,24 @@ export default function SiteHeader() {
           ))}
         </nav>
 
-        <Link
-          href="/contact"
-          data-magnetic
-          className="hidden whitespace-nowrap rounded-lg bg-gold px-6 py-3 font-display text-sm font-semibold text-white no-underline shadow-[0_2px_8px_rgba(154,123,79,0.25)] transition-all hover:-translate-y-px hover:bg-gold-dark lg:inline-block"
-        >
-          Partner With Us
-        </Link>
+        <div className="hidden items-center gap-3 lg:flex">
+          <Link
+            href="/search"
+            aria-label="Search the website"
+            className="grid h-10 w-10 place-items-center rounded-lg border border-line text-navy no-underline transition-colors hover:border-gold hover:text-gold"
+          >
+            <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <circle cx="11" cy="11" r="7" /><path d="m20 20-3.8-3.8" />
+            </svg>
+          </Link>
+          <Link
+            href="/contact"
+            data-magnetic
+            className="whitespace-nowrap rounded-lg bg-gold px-6 py-3 font-display text-sm font-semibold text-white no-underline shadow-[0_2px_8px_rgba(27,107,74,0.25)] transition-all hover:-translate-y-px hover:bg-gold-dark"
+          >
+            Partner With Us
+          </Link>
+        </div>
 
         <button
           onClick={() => setDrawer(true)}
@@ -98,6 +109,9 @@ export default function SiteHeader() {
               </div>
             ))}
           </nav>
+          <Link href="/search" className="mt-6 block border-b border-white/10 py-3.5 font-display text-xl font-semibold text-white no-underline">
+            Search
+          </Link>
           <Link href="/contact" className="mt-8 rounded-lg bg-gold px-8 py-4 text-center font-display text-[17px] font-semibold text-white no-underline">
             Partner With Us
           </Link>

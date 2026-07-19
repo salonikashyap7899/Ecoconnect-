@@ -4,7 +4,10 @@ import TiltCard from '@/components/TiltCard';
 import { PageHero, SectionHeading, GoldButton, GhostButton, CtaBand } from '@/components/ui';
 import { simPhilosophy, simEngCaps, simWorkflow, simTools, simWhy, simCases } from '@/lib/data';
 
-export const metadata = { title: 'Simulation' };
+export const metadata = {
+  title: 'Simulation',
+  description: 'System modelling, electrical studies, validation, and optimisation — engineering better solutions before they are built.',
+};
 
 export default function SimulationPage() {
   return (
@@ -78,7 +81,7 @@ export default function SimulationPage() {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-5">
             {simTools.map((t, i) => (
               <Reveal key={t.name} delay={(i % 5) * 0.06}>
-                <div className="rounded-[14px] border border-line p-7 px-5 text-center transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_14px_30px_rgba(154,123,79,0.1)]">
+                <div className="rounded-[14px] border border-line p-7 px-5 text-center transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_14px_30px_rgba(27,107,74,0.1)]">
                   <p className="m-0 mb-1 font-display text-base font-bold text-navy">{t.name}</p>
                   <p className="m-0 text-[12.5px] text-faint">{t.use}</p>
                 </div>
@@ -95,7 +98,7 @@ export default function SimulationPage() {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-7">
             {simWhy.map((w, i) => (
               <Reveal key={w.title} delay={(i % 4) * 0.08}>
-                <div className="h-full rounded-2xl border border-line p-9 px-[30px] transition-all hover:-translate-y-1.5 hover:border-gold hover:shadow-[0_18px_40px_rgba(154,123,79,0.1)]">
+                <div className="h-full rounded-2xl border border-line p-9 px-[30px] transition-all hover:-translate-y-1.5 hover:border-gold hover:shadow-[0_18px_40px_rgba(27,107,74,0.1)]">
                   <span className="mb-6 inline-block h-[3px] w-9 rounded-sm bg-gold" />
                   <h3 className="m-0 mb-2.5 font-display text-[19px] font-semibold text-navy">{w.title}</h3>
                   <p className="m-0 text-[14.5px] leading-relaxed text-muted">{w.desc}</p>

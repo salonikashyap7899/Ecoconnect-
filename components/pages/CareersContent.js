@@ -18,7 +18,9 @@ export default function CareersContent() {
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [dept, setDept] = useState('All');
-  const [form, setForm] = useState({ name: '', email: '', phone: '', area: '', msg: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', location: '', area: '', exp: '', linkedin: '', msg: '' });
+  const [resume, setResume] = useState(null);
+  const [fileError, setFileError] = useState('');
   const [error, setError] = useState(false);
 
   const q = search.toLowerCase();
@@ -27,8 +29,16 @@ export default function CareersContent() {
   );
 
   const set = (k) => (e) => { setForm((f) => ({ ...f, [k]: e.target.value })); setError(false); };
+  const onResume = (e) => {
+    const file = e.target.files?.[0];
+    setFileError('');
+    if (!file) { setResume(null); return; }
+    if (!/\.(pdf|docx?)$/i.test(file.name)) { setResume(null); setFileError('Resume must be a PDF, DOC, or DOCX file.'); return; }
+    if (file.size > 5 * 1024 * 1024) { setResume(null); setFileError('Resume must be smaller than 5 MB.'); return; }
+    setResume(file);
+  };
   const submit = () => {
-    if (form.name.trim() && /.+@.+\..+/.test(form.email) && form.area) router.push('/thank-you');
+    if (form.name.trim() && /.+@.+\..+/.test(form.email) && form.area && resume && !fileError) router.push('/thank-you');
     else setError(true);
   };
 
@@ -129,7 +139,7 @@ export default function CareersContent() {
             <SectionHeading eyebrow="Employee Benefits" title="Why people stay" className="mb-6" />
             <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3.5">
               {careersBenefits.map((b) => (
-                <div key={b.name} className="rounded-xl border border-line p-[22px] px-5 transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_12px_28px_rgba(154,123,79,0.1)]">
+                <div key={b.name} className="rounded-xl border border-line p-[22px] px-5 transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_12px_28px_rgba(27,107,74,0.1)]">
                   <span aria-hidden="true" className="mb-3 inline-grid h-10 w-10 place-items-center rounded-[10px] bg-sand font-display text-[13px] font-bold text-gold">{b.glyph}</span>
                   <p className="m-0 text-sm font-semibold leading-snug text-navy">{b.name}</p>
                 </div>
@@ -179,6 +189,7 @@ export default function CareersContent() {
             <Field label="Full Name *"><input value={form.name} onChange={set('name')} className={inputClass} /></Field>
             <Field label="Email *"><input type="email" value={form.email} onChange={set('email')} className={inputClass} /></Field>
             <Field label="Phone"><input type="tel" value={form.phone} onChange={set('phone')} className={inputClass} /></Field>
+            <Field label="Current Location"><input value={form.location} onChange={set('location')} className={inputClass} /></Field>
             <Field label="Area of Interest *">
               <select value={form.area} onChange={set('area')} className={inputClass}>
                 <option value="">Select…</option>
@@ -188,11 +199,27 @@ export default function CareersContent() {
                 <option value="Corporate">Corporate Functions</option>
               </select>
             </Field>
+            <Field label="Years of Experience">
+              <select value={form.exp} onChange={set('exp')} className={inputClass}>
+                <option value="">Select…</option>
+                <option value="Fresher">Fresher</option>
+                <option value="1-3">1–3 years</option>
+                <option value="3-6">3–6 years</option>
+                <option value="6-10">6–10 years</option>
+                <option value="10+">10+ years</option>
+              </select>
+            </Field>
+            <Field label="LinkedIn Profile"><input type="url" value={form.linkedin} onChange={set('linkedin')} placeholder="https://linkedin.com/in/…" className={inputClass} /></Field>
+            <Field label="Resume (PDF/DOC/DOCX, max 5 MB) *">
+              <input type="file" accept=".pdf,.doc,.docx" onChange={onResume} className={`${inputClass} file:mr-3 file:rounded-md file:border-0 file:bg-sand file:px-3 file:py-1.5 file:font-display file:text-[13px] file:font-semibold file:text-gold`} />
+            </Field>
           </div>
+          {fileError && <p className="m-0 mt-3 text-sm text-[#C0392B]">{fileError}</p>}
+          {resume && <p className="m-0 mt-3 text-sm font-semibold text-gold">✓ {resume.name} attached</p>}
           <div className="mt-5">
-            <Field label="Message"><textarea value={form.msg} onChange={set('msg')} rows={4} className={inputClass} /></Field>
+            <Field label="Cover Letter / Message"><textarea value={form.msg} onChange={set('msg')} rows={4} className={inputClass} /></Field>
           </div>
-          {error && <p className="m-0 mt-4 text-sm text-[#C0392B]">Please fill in name, a valid email, and your area of interest.</p>}
+          {error && <p className="m-0 mt-4 text-sm text-[#C0392B]">Please fill in name, a valid email, your area of interest, and attach a valid resume.</p>}
           <button onClick={submit} className="mt-7 rounded-[10px] bg-gold px-10 py-4 font-display text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-gold-dark">Submit Application</button>
         </div>
       </section>

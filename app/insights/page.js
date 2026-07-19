@@ -1,7 +1,15 @@
+import { Suspense } from 'react';
 import InsightsContent from '@/components/pages/InsightsContent';
 
-export const metadata = { title: 'Insights' };
+export const metadata = {
+  title: 'Insights',
+  description: 'Blog, news, events, and announcements from Ecoconnect Services — thinking that powers the clean energy transition.',
+};
 
 export default function InsightsPage() {
-  return <InsightsContent />;
+  return (
+    <Suspense>
+      <InsightsContent />
+    </Suspense>
+  );
 }

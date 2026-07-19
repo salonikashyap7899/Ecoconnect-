@@ -94,26 +94,26 @@ export default function Hero3D({ className = '' }) {
 
       const core = new THREE.Mesh(
         new THREE.IcosahedronGeometry(2.5, 1),
-        new THREE.MeshBasicMaterial({ color: 0xd8be91, wireframe: true, transparent: true, opacity: 0.36 }),
+        new THREE.MeshBasicMaterial({ color: 0x9fd6b8, wireframe: true, transparent: true, opacity: 0.36 }),
       );
       group.add(core);
 
       const coreInner = new THREE.Mesh(
         new THREE.IcosahedronGeometry(2.5, 0),
-        new THREE.MeshBasicMaterial({ color: 0x9a7b4f, wireframe: true, transparent: true, opacity: 0.22 }),
+        new THREE.MeshBasicMaterial({ color: 0x1b6b4a, wireframe: true, transparent: true, opacity: 0.22 }),
       );
       group.add(coreInner);
 
       const glowTex = makeGlowTexture(THREE);
-      const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xd8be91, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false }));
+      const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0x9fd6b8, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false }));
       glow.scale.set(8.5, 8.5, 1);
       group.add(glow);
 
       const rings = [];
       const ringDefs = [
-        { radius: 4.0, tiltX: 0.5, tiltY: 0.2, count: 7, speed: 0.05, color: 0xd8be91, size: 0.13 },
-        { radius: 4.9, tiltX: -0.75, tiltY: 0.35, count: 5, speed: -0.037, color: 0xb69368, size: 0.1 },
-        { radius: 5.8, tiltX: 1.1, tiltY: -0.3, count: 9, speed: 0.028, color: 0xefe3c8, size: 0.075 },
+        { radius: 4.0, tiltX: 0.5, tiltY: 0.2, count: 7, speed: 0.05, color: 0x9fd6b8, size: 0.13 },
+        { radius: 4.9, tiltX: -0.75, tiltY: 0.35, count: 5, speed: -0.037, color: 0x7cc4a0, size: 0.1 },
+        { radius: 5.8, tiltX: 1.1, tiltY: -0.3, count: 9, speed: 0.028, color: 0xd9e9df, size: 0.075 },
       ];
       ringDefs.forEach((def) => {
         const ringGroup = new THREE.Group();

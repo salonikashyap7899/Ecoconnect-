@@ -12,7 +12,12 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const project = getProject(slug);
-  return { title: project ? project.title : 'Project' };
+  if (!project) return { title: 'Project' };
+  return {
+    title: project.title,
+    description: project.summary,
+    openGraph: { title: project.title, description: project.summary, images: [{ url: project.img }] },
+  };
 }
 
 export default async function ProjectDetailPage({ params }) {
