@@ -3,14 +3,14 @@ import { collections, getCollection, getSubmissions, submissionTypes } from '@/l
 
 export const dynamic = 'force-dynamic';
 
-export default function AdminDashboard() {
-  const subCounts = Object.keys(submissionTypes).map((key) => ({
-    key, label: submissionTypes[key].label, items: getSubmissions(key) || [],
-  }));
-  const contentCounts = Object.keys(collections).map((key) => ({
-    key, label: collections[key].label, count: (getCollection(key) || []).length,
-  }));
-  const latestEnquiries = (getSubmissions('enquiries') || []).slice(0, 5);
+export default async function AdminDashboard() {
+  const subCounts = await Promise.all(Object.keys(submissionTypes).map(async (key) => ({
+    key, label: submissionTypes[key].label, items: (await getSubmissions(key)) || [],
+  })));
+  const contentCounts = await Promise.all(Object.keys(collections).map(async (key) => ({
+    key, label: collections[key].label, count: ((await getCollection(key)) || []).length,
+  })));
+  const latestEnquiries = (subCounts.find((s) => s.key === 'enquiries')?.items || []).slice(0, 5);
   const pendingCount = subCounts.reduce((n, s) => n + s.items.filter((i) => i.status === 'New').length, 0);
 
   return (

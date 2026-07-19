@@ -12,12 +12,12 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 });
   }
 
-  const existing = getSubmissions('subscribers') || [];
+  const existing = (await getSubmissions('subscribers')) || [];
   if (existing.some((s) => s.email?.toLowerCase() === email.toLowerCase())) {
     return NextResponse.json({ ok: true, duplicate: true });
   }
 
-  const entry = addSubmission('subscribers', { email: email.trim(), name: name?.trim() || '' });
+  const entry = await addSubmission('subscribers', { email: email.trim(), name: name?.trim() || '' });
 
   await sendMail({
     subject: '[Ecoconnect] New newsletter subscriber',

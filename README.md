@@ -107,18 +107,24 @@ MAIL_TO=info@ecoconnectservices.com      # where submissions are delivered
 
 Leave these unset and email sending is silently skipped — nothing breaks.
 
-### 3. CMS storage location
+### 3. Database (CMS storage) — recommended for production
 
-Content edits and submissions persist to `DATA_DIR/cms.json` (default `./.data/`, git-ignored).
+Set `DATABASE_URL` to a PostgreSQL connection string and **all CMS content and form submissions are stored durably in the database** — tables are created automatically on first use, no migrations to run:
 
 ```bash
-DATA_DIR=/var/data/ecoconnect            # point at a persistent volume in production
+DATABASE_URL=postgresql://user:password@host:5432/dbname
+# DATABASE_SSL=false                     # only for non-TLS servers (e.g. localhost)
 ```
 
-> **Serverless note (Vercel):** the filesystem is ephemeral, so CMS edits made in production reset on each redeploy. Options, in order of effort:
-> 1. Treat `lib/data.js` as the source of truth and edit content via pull requests (works today).
-> 2. Set `DATA_DIR` to a mounted volume on a Node host (VPS, Railway, Render…).
-> 3. Swap `lib/cms.js`'s read/write functions for a database client (Vercel Postgres, Supabase…). All pages and admin UI go through this one module, so nothing else changes.
+Works with any Postgres provider:
+- **Neon** (free tier, one-click from the Vercel marketplace: Project → Storage → Create Database → Neon — Vercel injects `DATABASE_URL` automatically)
+- **Vercel Postgres**, **Supabase**, **Railway**, or self-hosted
+
+**Without `DATABASE_URL`** the CMS falls back to a JSON file at `DATA_DIR/cms.json` (default `./.data/`, git-ignored) — fine for local development and Node hosts with a persistent disk, but ephemeral on serverless platforms like Vercel. Either way, the public site always works: content collections fall back to the seeds in `lib/data.js` until an administrator edits them.
+
+```bash
+DATA_DIR=/var/data/ecoconnect            # optional: file-store location when no database is set
+```
 
 ### 4. Analytics (optional)
 
@@ -175,7 +181,7 @@ All form endpoints validate server-side and include honeypot spam protection (`w
    - [ ] Configure SMTP so enquiries reach your inbox
    - [ ] Add `NEXT_PUBLIC_GA_ID` (and Search Console verification)
    - [ ] Point your custom domain at Vercel; SSL is automatic
-   - [ ] Decide on durable CMS storage (see Backend Setup §3)
+   - [ ] Connect a Postgres database — set `DATABASE_URL` (see Backend Setup §3)
    - [ ] Replace placeholder imagery/logos with brand assets via the CMS
 
 ---

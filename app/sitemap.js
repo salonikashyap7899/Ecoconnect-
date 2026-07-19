@@ -1,8 +1,10 @@
-import { projects, articles } from '@/lib/data';
+import { getCollection } from '@/lib/cms';
 
 const BASE = 'https://ecoconnectservices.com';
 
-export default function sitemap() {
+export default async function sitemap() {
+  const projects = await getCollection('projects');
+  const articles = await getCollection('articles');
   const staticPages = [
     { path: '', priority: 1 },
     { path: '/about', priority: 0.9 },

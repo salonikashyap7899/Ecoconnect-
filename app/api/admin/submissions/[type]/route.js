@@ -9,7 +9,7 @@ function unauthorized(request) {
 export async function GET(request, { params }) {
   if (unauthorized(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   const { type } = await params;
-  const items = getSubmissions(type);
+  const items = await getSubmissions(type);
   if (items === null) return NextResponse.json({ error: 'Unknown submission type' }, { status: 404 });
 
   if (new URL(request.url).searchParams.get('format') === 'csv') {
@@ -31,7 +31,7 @@ export async function PATCH(request, { params }) {
   if (!id || !['New', 'In Progress', 'Closed'].includes(status)) {
     return NextResponse.json({ error: 'id and a valid status are required' }, { status: 400 });
   }
-  const entry = updateSubmissionStatus(type, id, status);
+  const entry = await updateSubmissionStatus(type, id, status);
   if (!entry) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   return NextResponse.json({ ok: true, entry });
 }

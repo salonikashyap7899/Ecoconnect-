@@ -6,11 +6,11 @@ import { getCollection } from '@/lib/cms';
 
 export const dynamic = 'force-dynamic';
 
-const getArticle = (slug) => getCollection('articles').find((a) => a.slug === slug) || null;
+const getArticle = async (slug) => (await getCollection('articles')).find((a) => a.slug === slug) || null;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const article = getArticle(slug);
+  const article = await getArticle(slug);
   if (!article) return { title: 'Article' };
   return {
     title: article.title,
@@ -26,10 +26,10 @@ export async function generateMetadata({ params }) {
 
 export default async function ArticlePage({ params }) {
   const { slug } = await params;
-  const article = getArticle(slug);
+  const article = await getArticle(slug);
   if (!article) notFound();
 
-  const articles = getCollection('articles');
+  const articles = await getCollection('articles');
   const idx = articles.findIndex((a) => a.slug === slug);
   const prev = articles[idx - 1] || null;
   const next = articles[idx + 1] || null;

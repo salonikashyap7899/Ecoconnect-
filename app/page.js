@@ -11,10 +11,10 @@ import { getCollection } from '@/lib/cms';
 // the CMS store (WRS §9.9–§9.11).
 export const dynamic = 'force-dynamic';
 
-export default function HomePage() {
-  const partners = getCollection('partners');
-  const featuredProjects = getCollection('projects').slice(0, 3);
-  const latest = getCollection('articles').filter((a) => !a.featured).slice(0, 3);
+export default async function HomePage() {
+  const partners = await getCollection('partners');
+  const featuredProjects = (await getCollection('projects')).slice(0, 3);
+  const latest = (await getCollection('articles')).filter((a) => !a.featured).slice(0, 3);
   const partnerLoop = [...partners, ...partners];
 
   return (

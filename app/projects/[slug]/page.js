@@ -7,11 +7,11 @@ import { getCollection } from '@/lib/cms';
 
 export const dynamic = 'force-dynamic';
 
-const getProject = (slug) => getCollection('projects').find((p) => p.slug === slug) || null;
+const getProject = async (slug) => (await getCollection('projects')).find((p) => p.slug === slug) || null;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProject(slug);
   if (!project) return { title: 'Project' };
   return {
     title: project.title,
@@ -22,10 +22,10 @@ export async function generateMetadata({ params }) {
 
 export default async function ProjectDetailPage({ params }) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProject(slug);
   if (!project) notFound();
 
-  const projects = getCollection('projects');
+  const projects = await getCollection('projects');
   const idx = projects.findIndex((p) => p.slug === slug);
   const prev = projects[(idx - 1 + projects.length) % projects.length];
   const next = projects[(idx + 1) % projects.length];

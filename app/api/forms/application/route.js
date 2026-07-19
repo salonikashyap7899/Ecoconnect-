@@ -29,7 +29,7 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Resume must be smaller than 5 MB.' }, { status: 400 });
   }
 
-  const entry = addSubmission('applications', {
+  const entry = await addSubmission('applications', {
     ...fields,
     resumeName: resume.name,
     resumeSize: resume.size,

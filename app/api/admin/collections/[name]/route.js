@@ -9,7 +9,7 @@ function unauthorized(request) {
 export async function GET(request, { params }) {
   if (unauthorized(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   const { name } = await params;
-  const items = getCollection(name);
+  const items = await getCollection(name);
   if (items === null) return NextResponse.json({ error: 'Unknown collection' }, { status: 404 });
   return NextResponse.json({ schema: collections[name], items });
 }
@@ -20,6 +20,6 @@ export async function PUT(request, { params }) {
   if (!collections[name]) return NextResponse.json({ error: 'Unknown collection' }, { status: 404 });
   const { items } = await request.json().catch(() => ({}));
   if (!Array.isArray(items)) return NextResponse.json({ error: 'items must be an array' }, { status: 400 });
-  saveCollection(name, items);
+  await saveCollection(name, items);
   return NextResponse.json({ ok: true, count: items.length });
 }

@@ -12,7 +12,8 @@ export const metadata = {
   description: 'Who Ecoconnect Services is — vision, mission, leadership, journey, business model, and the ecosystem behind the energy transition.',
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const leaders = await getCollection('leaders');
   return (
     <>
       <PageHero
@@ -103,7 +104,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[1280px]">
           <Reveal><SectionHeading center eyebrow="Our Leadership" title="Led by builders and engineers" className="mb-15" /></Reveal>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-7">
-            {getCollection('leaders').map((l, i) => (
+            {leaders.map((l, i) => (
               <Reveal key={l.name} delay={i * 0.1}>
                 <div className="h-full overflow-hidden rounded-2xl border border-line bg-white transition-all hover:-translate-y-1.5 hover:shadow-card-hover">
                   <div className="aspect-square overflow-hidden bg-cream">
