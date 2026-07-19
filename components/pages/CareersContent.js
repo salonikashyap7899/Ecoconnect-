@@ -14,17 +14,18 @@ import {
 
 const inputClass = 'w-full box-border rounded-[10px] border-[1.5px] border-line-soft bg-white px-4 py-[13px] text-[14.5px] text-body outline-none focus:border-gold';
 
-export default function CareersContent() {
+export default function CareersContent({ jobsData = careersJobs }) {
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [dept, setDept] = useState('All');
   const [form, setForm] = useState({ name: '', email: '', phone: '', location: '', area: '', exp: '', linkedin: '', msg: '' });
+  const [hp, setHp] = useState('');
   const [resume, setResume] = useState(null);
   const [fileError, setFileError] = useState('');
   const [error, setError] = useState(false);
 
   const q = search.toLowerCase();
-  const jobs = careersJobs.filter(
+  const jobs = jobsData.filter(
     (j) => (dept === 'All' || j.dept === dept) && (!q || j.title.toLowerCase().includes(q) || j.location.toLowerCase().includes(q)),
   );
 
@@ -37,8 +38,14 @@ export default function CareersContent() {
     if (file.size > 5 * 1024 * 1024) { setResume(null); setFileError('Resume must be smaller than 5 MB.'); return; }
     setResume(file);
   };
-  const submit = () => {
-    if (form.name.trim() && /.+@.+\..+/.test(form.email) && form.area && resume && !fileError) router.push('/thank-you');
+  const submit = async () => {
+    if (!(form.name.trim() && /.+@.+\..+/.test(form.email) && form.area && resume && !fileError)) { setError(true); return; }
+    const fd = new FormData();
+    Object.entries({ name: form.name, email: form.email, phone: form.phone, location: form.location, area: form.area, exp: form.exp, linkedin: form.linkedin, message: form.msg }).forEach(([k, v]) => fd.append(k, v));
+    fd.append('resume', resume);
+    fd.append('website', hp);
+    const res = await fetch('/api/forms/application', { method: 'POST', body: fd }).catch(() => null);
+    if (res?.ok) router.push('/thank-you');
     else setError(true);
   };
 
@@ -185,6 +192,7 @@ export default function CareersContent() {
           <div className="mb-12 text-center">
             <SectionHeading center eyebrow="General Application" title="Don't see your role? Apply anyway." sub="We review every profile and reach out when a fit opens up." />
           </div>
+          <input type="text" value={hp} onChange={(e) => setHp(e.target.value)} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
           <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5">
             <Field label="Full Name *"><input value={form.name} onChange={set('name')} className={inputClass} /></Field>
             <Field label="Email *"><input type="email" value={form.email} onChange={set('email')} className={inputClass} /></Field>

@@ -58,11 +58,25 @@ const orgSchema = {
   sameAs: ["https://linkedin.com/company/ecoconnect-services"],
 };
 
+// Analytics integrations activate when the env vars are set (WRS §22.6):
+// NEXT_PUBLIC_GA_ID (Google Analytics 4), NEXT_PUBLIC_GTM_ID (Tag Manager).
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${poppins.variable} ${inter.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-white">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
+        {GA_ID && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+            <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','${GA_ID}');` }} />
+          </>
+        )}
+        {GTM_ID && (
+          <script dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');` }} />
+        )}
         <SiteHeader />
         <main className="flex-1 pt-[76px]">{children}</main>
         <SiteFooter />

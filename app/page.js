@@ -4,14 +4,17 @@ import Reveal from '@/components/Reveal';
 import TiltCard from '@/components/TiltCard';
 import StatCounter from '@/components/StatCounter';
 import { Eyebrow, SectionHeading, GoldButton, GhostButton, CtaBand } from '@/components/ui';
-import {
-  pillars, capabilities, industries, whyCards, homeStats, partners,
-  projects, insightArticleCards,
-} from '@/lib/data';
+import { pillars, capabilities, industries, whyCards, homeStats } from '@/lib/data';
+import { getCollection } from '@/lib/cms';
+
+// Featured projects, partner logos, and latest insights are pulled live from
+// the CMS store (WRS §9.9–§9.11).
+export const dynamic = 'force-dynamic';
 
 export default function HomePage() {
-  const featuredProjects = projects.slice(0, 3);
-  const latest = insightArticleCards.slice(0, 3);
+  const partners = getCollection('partners');
+  const featuredProjects = getCollection('projects').slice(0, 3);
+  const latest = getCollection('articles').filter((a) => !a.featured).slice(0, 3);
   const partnerLoop = [...partners, ...partners];
 
   return (

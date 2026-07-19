@@ -10,6 +10,7 @@ const inputClass = 'w-full box-border rounded-[10px] border-[1.5px] border-line-
 
 export default function ContactContent() {
   const [form, setForm] = useState({ name: '', org: '', email: '', phone: '', cat: '', subject: '', msg: '' });
+  const [hp, setHp] = useState('');
   const [attachment, setAttachment] = useState(null);
   const [fileError, setFileError] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -24,9 +25,18 @@ export default function ContactContent() {
     if (file.size > 5 * 1024 * 1024) { setAttachment(null); setFileError('Attachment must be smaller than 5 MB.'); return; }
     setAttachment(file);
   };
-  const submit = () => {
+  const submit = async () => {
     const ok = form.name.trim() && /.+@.+\..+/.test(form.email) && form.cat && form.subject.trim() && form.msg.trim();
-    if (ok) setSubmitted(true);
+    if (!ok) { setError(true); return; }
+    const res = await fetch('/api/forms/enquiry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: form.name, org: form.org, email: form.email, phone: form.phone,
+        category: form.cat, subject: form.subject, message: form.msg, website: hp,
+      }),
+    }).catch(() => null);
+    if (res?.ok) setSubmitted(true);
     else setError(true);
   };
   const reset = () => { setForm({ name: '', org: '', email: '', phone: '', cat: '', subject: '', msg: '' }); setSubmitted(false); };
@@ -80,6 +90,7 @@ export default function ContactContent() {
             ) : (
               <>
                 <h2 className="m-0 mb-7 font-display text-[23px] font-semibold text-navy">Send us a message</h2>
+                <input type="text" value={hp} onChange={(e) => setHp(e.target.value)} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-[18px]">
                   <Field label="Full Name *"><input value={form.name} onChange={set('name')} className={inputClass} /></Field>
                   <Field label="Organization"><input value={form.org} onChange={set('org')} className={inputClass} /></Field>

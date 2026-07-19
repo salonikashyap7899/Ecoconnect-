@@ -1,4 +1,7 @@
 import ProjectsContent from '@/components/pages/ProjectsContent';
+import { getCollection } from '@/lib/cms';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Projects',
@@ -6,5 +9,5 @@ export const metadata = {
 };
 
 export default function ProjectsPage() {
-  return <ProjectsContent />;
+  return <ProjectsContent projectsData={getCollection('projects')} testimonialsData={getCollection('testimonials')} />;
 }

@@ -2,11 +2,11 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Hero3D from '@/components/Hero3D';
 import { CtaBand } from '@/components/ui';
-import { articles, getArticle } from '@/lib/data';
+import { getCollection } from '@/lib/cms';
 
-export function generateStaticParams() {
-  return articles.map((a) => ({ slug: a.slug }));
-}
+export const dynamic = 'force-dynamic';
+
+const getArticle = (slug) => getCollection('articles').find((a) => a.slug === slug) || null;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -29,6 +29,7 @@ export default async function ArticlePage({ params }) {
   const article = getArticle(slug);
   if (!article) notFound();
 
+  const articles = getCollection('articles');
   const idx = articles.findIndex((a) => a.slug === slug);
   const prev = articles[idx - 1] || null;
   const next = articles[idx + 1] || null;

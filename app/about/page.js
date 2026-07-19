@@ -1,7 +1,11 @@
 import Link from 'next/link';
 import Reveal from '@/components/Reveal';
 import { PageHero, SectionHeading, GoldButton, GhostButton, CtaBand } from '@/components/ui';
-import { aboutVmp, aboutJourney, aboutFlow, aboutLeaders, aboutEcosystem, aboutWhy } from '@/lib/data';
+import { aboutVmp, aboutJourney, aboutFlow, aboutEcosystem, aboutWhy } from '@/lib/data';
+import { getCollection } from '@/lib/cms';
+
+// Leadership profiles are CMS-managed (WRS §10.9).
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'About',
@@ -99,7 +103,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[1280px]">
           <Reveal><SectionHeading center eyebrow="Our Leadership" title="Led by builders and engineers" className="mb-15" /></Reveal>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-7">
-            {aboutLeaders.map((l, i) => (
+            {getCollection('leaders').map((l, i) => (
               <Reveal key={l.name} delay={i * 0.1}>
                 <div className="h-full overflow-hidden rounded-2xl border border-line bg-white transition-all hover:-translate-y-1.5 hover:shadow-card-hover">
                   <div className="aspect-square overflow-hidden bg-cream">

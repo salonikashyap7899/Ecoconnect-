@@ -6,12 +6,13 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Reveal from '@/components/Reveal';
 import FilterPills from '@/components/FilterPills';
 import { PageHero, SectionHeading, CtaBand } from '@/components/ui';
-import { articles, insightArticleCards, events, announcements } from '@/lib/data';
+import { articles, events, announcements } from '@/lib/data';
 
-const featured = articles.find((a) => a.featured);
 const tabs = ['All', 'Blog', 'News', 'Case Study', 'Technical Article', 'Announcement'];
 
-export default function InsightsContent() {
+export default function InsightsContent({ articlesData = articles, eventsData = events, announcementsData = announcements }) {
+  const featured = articlesData.find((a) => a.featured);
+  const insightArticleCards = articlesData.filter((a) => !a.featured);
   const router = useRouter();
   const params = useSearchParams();
   const urlCategory = params.get('category');
@@ -25,8 +26,14 @@ export default function InsightsContent() {
 
   const visible = tab === 'All' ? insightArticleCards : insightArticleCards.filter((a) => a.category === tab);
 
-  const subscribe = () => {
-    if (/.+@.+\..+/.test(email)) setSubscribed(true);
+  const subscribe = async () => {
+    if (!/.+@.+\..+/.test(email)) { setEmailError(true); return; }
+    const res = await fetch('/api/forms/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    }).catch(() => null);
+    if (res?.ok) setSubscribed(true);
     else setEmailError(true);
   };
 
@@ -85,7 +92,7 @@ export default function InsightsContent() {
         <div className="mx-auto max-w-[1280px]">
           <Reveal><SectionHeading eyebrow="Events" title="Meet us in the field" className="mb-13" /></Reveal>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
-            {events.map((e, i) => (
+            {eventsData.map((e, i) => (
               <Reveal key={e.title} delay={i * 0.1}>
                 <div className="flex h-full flex-col rounded-2xl bg-white p-8 px-[30px] shadow-card">
                   <div className="mb-[18px] flex items-center justify-between">
@@ -111,7 +118,7 @@ export default function InsightsContent() {
         <div className="mx-auto max-w-[860px]">
           <Reveal><SectionHeading eyebrow="Company Announcements" title="Milestones & updates" className="mb-13" /></Reveal>
           <div className="flex flex-col">
-            {announcements.map((an, i) => (
+            {announcementsData.map((an, i) => (
               <Reveal key={an.title} delay={i * 0.06}>
                 <div className="flex gap-6">
                   <div className="flex flex-col items-center">

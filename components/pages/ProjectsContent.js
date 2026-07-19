@@ -9,13 +9,13 @@ import { PageHero, SectionHeading, CtaBand } from '@/components/ui';
 import { projects, projectStats, projectTestimonials } from '@/lib/data';
 
 const caps = ['All', 'Skilling', 'Simulation', 'Services'];
-const inds = ['All', 'Electric Mobility', 'Renewable Energy', 'BESS', 'Industrial'];
 
-export default function ProjectsContent() {
+export default function ProjectsContent({ projectsData = projects, testimonialsData = projectTestimonials }) {
+  const inds = ['All', ...new Set(projectsData.map((p) => p.industry))];
   const [cap, setCap] = useState('All');
   const [ind, setInd] = useState('All');
 
-  const visible = projects.filter(
+  const visible = projectsData.filter(
     (p) => (cap === 'All' || p.capability === cap) && (ind === 'All' || p.industry === ind),
   );
 
@@ -72,7 +72,7 @@ export default function ProjectsContent() {
         <div className="mx-auto max-w-[1280px]">
           <Reveal><SectionHeading eyebrow="What Partners Say" title="Judged by delivery" className="mb-15" /></Reveal>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
-            {projectTestimonials.map((t, i) => (
+            {testimonialsData.map((t, i) => (
               <Reveal key={i} delay={i * 0.1}>
                 <figure className="m-0 flex h-full flex-col rounded-2xl bg-white p-9 px-8 shadow-card">
                   <span aria-hidden="true" className="font-display text-[44px] leading-none text-champagne-soft">“</span>
