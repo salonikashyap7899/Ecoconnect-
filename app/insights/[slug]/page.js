@@ -1,0 +1,78 @@
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import Hero3D from '@/components/Hero3D';
+import { CtaBand } from '@/components/ui';
+import { articles, getArticle } from '@/lib/data';
+
+export function generateStaticParams() {
+  return articles.map((a) => ({ slug: a.slug }));
+}
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const article = getArticle(slug);
+  return { title: article ? article.title : 'Article' };
+}
+
+export default async function ArticlePage({ params }) {
+  const { slug } = await params;
+  const article = getArticle(slug);
+  if (!article) notFound();
+
+  const more = articles.filter((a) => a.slug !== slug).slice(0, 3);
+
+  return (
+    <>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-navy px-8 pb-[110px] pt-[150px]">
+        <Hero3D />
+        <div aria-hidden="true" className="absolute inset-0"><img src={article.img} alt="" className="h-full w-full object-cover opacity-40" /></div>
+        <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(100deg,rgba(5,17,33,0.88)_25%,rgba(5,17,33,0.55))]" />
+        <div className="relative mx-auto max-w-[860px]">
+          <nav aria-label="Breadcrumb" className="mb-[22px] text-[13.5px]">
+            <Link href="/" className="text-white/65 no-underline">Home</Link>
+            <span className="px-2 text-white/40">/</span>
+            <Link href="/insights" className="text-white/65 no-underline">Insights</Link>
+            <span className="px-2 text-white/40">/</span>
+            <span className="text-champagne">{article.category}</span>
+          </nav>
+          <p className="m-0 mb-4 inline-block rounded-full bg-champagne px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] text-navy">{article.category}</p>
+          <h1 className="m-0 mb-[22px] font-display text-[clamp(32px,4vw,52px)] font-bold leading-[1.15] text-white text-balance">{article.title}</h1>
+          <p className="m-0 text-[14.5px] text-white/70">By {article.author} · {article.date} · {article.read}</p>
+        </div>
+      </section>
+
+      {/* Body */}
+      <section className="bg-white px-8 py-[90px]">
+        <article className="mx-auto flex max-w-[720px] flex-col gap-6">
+          {article.content.map((para, i) => (
+            <p key={i} className="m-0 text-[17px] leading-[1.85] text-muted-deep">{para}</p>
+          ))}
+        </article>
+      </section>
+
+      {/* More */}
+      <section className="bg-cream px-8 py-[100px]">
+        <div className="mx-auto max-w-[1280px]">
+          <h2 className="m-0 mb-11 font-display text-[clamp(28px,3vw,36px)] font-semibold text-navy">More Insights</h2>
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
+            {more.map((a) => (
+              <Link key={a.slug} href={`/insights/${a.slug}`} className="flex flex-col overflow-hidden rounded-2xl bg-white text-inherit no-underline shadow-card transition-all hover:-translate-y-1.5 hover:shadow-card-hover">
+                <div className="aspect-[16/9] overflow-hidden"><img src={a.img} alt={a.title} className="h-full w-full object-cover" /></div>
+                <div className="flex flex-1 flex-col p-6 pb-7">
+                  <div className="mb-3.5 flex items-center gap-3">
+                    <span className="rounded-full bg-[#EEF2F7] px-3 py-1 text-[11.5px] font-semibold uppercase tracking-[0.08em] text-navy">{a.category}</span>
+                    <span className="text-[13px] text-faint-soft">{a.date}</span>
+                  </div>
+                  <h3 className="m-0 flex-1 font-display text-lg font-semibold leading-snug text-navy">{a.title}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CtaBand heading="Have a Story Worth Telling?" sub="Partner announcements, joint case studies, and event collaborations — we're listening." />
+    </>
+  );
+}
